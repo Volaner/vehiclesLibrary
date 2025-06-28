@@ -4,6 +4,7 @@ class KubanBus isclass MapObject
 {
 	bool curtainEnable, driverEnable, passengersEnable, lightEnable, idle;
     int plate;
+    bool putCurtain;
 	void SetLight(bool swithOn);
     void StartEngine(bool engineOn);
 
@@ -30,7 +31,8 @@ class KubanBus isclass MapObject
     {
         inherited(pSoup);
 
-        curtainEnable = pSoup.GetNamedTagAsBool("curtainEnable", false);
+        putCurtain = me.GetAsset().GetConfigSoupCached().GetNamedSoup("extensions").GetNamedTagAsBool("put-curtain");
+        curtainEnable = pSoup.GetNamedTagAsBool("curtainEnable", putCurtain);
         driverEnable = pSoup.GetNamedTagAsBool("driverEnable", false);
         passengersEnable = pSoup.GetNamedTagAsBool("passengersEnable", false);
         lightEnable = pSoup.GetNamedTagAsBool("lightEnable", false);
