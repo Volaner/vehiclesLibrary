@@ -1,14 +1,14 @@
 include "MapObject.gs"
 
-class KubanBus isclass MapObject
+class Vehicles isclass MapObject
 {
-	bool curtainEnable, driverEnable, passengersEnable, lightEnable, idle;
-    int plate;
-    bool putCurtain;
+	bool driverEnable, passengersEnable, lightEnable, idle;
+	int plate;
+	string additionalOption = "&nbsp;";
 	void SetLight(bool swithOn);
     void StartEngine(bool engineOn);
 
-	public void Init(Asset pAsset)
+    public void Init(Asset pAsset)
     {
         inherited(pAsset);
     }
@@ -17,7 +17,6 @@ class KubanBus isclass MapObject
     {
         Soup pSoup = inherited();
 
-        pSoup.SetNamedTag("curtainEnable", curtainEnable);
         pSoup.SetNamedTag("driverEnable", driverEnable);
         pSoup.SetNamedTag("passengersEnable", passengersEnable);
         pSoup.SetNamedTag("lightEnable", lightEnable);
@@ -31,24 +30,20 @@ class KubanBus isclass MapObject
     {
         inherited(pSoup);
 
-        putCurtain = me.GetAsset().GetConfigSoupCached().GetNamedSoup("extensions").GetNamedTagAsBool("put-curtain");
-        curtainEnable = pSoup.GetNamedTagAsBool("curtainEnable", putCurtain);
         driverEnable = pSoup.GetNamedTagAsBool("driverEnable", false);
         passengersEnable = pSoup.GetNamedTagAsBool("passengersEnable", false);
         lightEnable = pSoup.GetNamedTagAsBool("lightEnable", false);
         idle = pSoup.GetNamedTagAsBool("idle", false);
         plate = pSoup.GetNamedTagAsInt("plate", 1);
 
-        SetMeshVisible("curtain", curtainEnable, 0.0f);
         SetMeshVisible("driver", driverEnable, 0.0f);
         SetMeshVisible("p-1", passengersEnable, 0.0f);
         SetMeshVisible("p-2", passengersEnable, 0.0f);
         SetMeshVisible("p-3", passengersEnable, 0.0f);
-        SetMeshVisible("p-4", passengersEnable, 0.0f);
         SetLight(lightEnable);
         StartEngine(idle);
-        SetMeshVisible("number-front-85rus", 1 == plate, 0.0f);
-        SetMeshVisible("number-rear-85rus", 1 == plate, 0.0f);
+        SetMeshVisible("number-rus-f", 1 == plate, 0.0f);
+        SetMeshVisible("number-rus-r", 1 == plate, 0.0f);
         SetMeshVisible("number-front-kzhp", 2 == plate, 0.0f);
         SetMeshVisible("number-rear-kzhp", 2 == plate, 0.0f);
     }
@@ -56,6 +51,7 @@ class KubanBus isclass MapObject
     public string GetDescriptionHTML(void)
     {
         string sHtml = inherited();
+
         sHtml = sHtml
             + "<table border='1'>"
                 + "<tr>"
@@ -68,25 +64,25 @@ class KubanBus isclass MapObject
                 + "</tr>"
                 + "<tr>"
                     + "<td width='150'>" + HTMLWindow.RadioButton("live://property/plate2", 2 == plate) + "&nbsp;USSR" + "</td>"
-                    + "<td>" + HTMLWindow.CheckBox("live://property/curtainEnable", curtainEnable) + "&nbsp;Curtain" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                    + "<td width='150'>" + HTMLWindow.RadioButton("live://property/plate0", 0 == plate) + "&nbsp;None" + "</td>"
                     + "<td>" + HTMLWindow.CheckBox("live://property/lightEnable", lightEnable) + "&nbsp;Light(only night)" + "</td>"
                 + "</tr>"
                 + "<tr>"
-                    + "<td width='150'>&nbsp;</td>"
+                    + "<td width='150'>" + HTMLWindow.RadioButton("live://property/plate0", 0 == plate) + "&nbsp;None" + "</td>"
                     + "<td>" + HTMLWindow.CheckBox("live://property/idle", idle) + "&nbsp;Engine on" + "</td>"
                 + "</tr>"
+                + "<tr>"
+                    + "<td width='150'>&nbsp;</td>"
+                    + "<td>" + additionalOption + "</td>"
+                + "</tr>"
             + "</table>";
+
         return sHtml;
     }
 
     public string GetPropertyType(string sPropertyId)
     {
         string sRet = "link";
-        if(sPropertyId == "curtainEnable"
-    		or sPropertyId == "driverEnable"
+        if(sPropertyId == "driverEnable"
             or sPropertyId == "passengersEnable"
         	or sPropertyId == "lightEnable"
             or sPropertyId == "idle"
@@ -99,11 +95,7 @@ class KubanBus isclass MapObject
 
     public void LinkPropertyValue(string sPropertyId)
     {
-        if(sPropertyId == "curtainEnable")
-        {
-            curtainEnable = !curtainEnable;
-        }
-        else if (sPropertyId == "driverEnable")
+        if (sPropertyId == "driverEnable")
         {
             driverEnable = !driverEnable;
         }

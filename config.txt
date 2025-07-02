@@ -9,8 +9,8 @@ category-class                          "VL"
 author                                  "Volaner"
 license                                 "Free for non commercial use"
 trainz-build                            4.6
-script                                  "kubanbus.gs"
-class                                   "KubanBus"
+script                                  "vehicles.gs"
+class                                   "Vehicles"
 
 thumbnails
 {
