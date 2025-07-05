@@ -26,12 +26,11 @@ class Bus isclass Vehicles
         curtainEnable = pSoup.GetNamedTagAsBool("curtainEnable", putCurtain);
 
         SetMeshVisible("curtain", curtainEnable, 0.0f);
-        SetMeshVisible("p-4", passengersEnable, 0.0f);
     }
 
     public string GetDescriptionHTML(void)
     {
-        additionalOption = HTMLWindow.CheckBox("live://property/curtainEnable", curtainEnable) + "&nbsp;Curtain";
+        additionalOption = "<p>" + HTMLWindow.CheckBox("live://property/curtainEnable", curtainEnable) + "&nbsp;Curtain" + "</p>";
 
         string sHtml = inherited();
 
