@@ -1,9 +1,9 @@
 
 kuid                                    <kuid2:812750:29332:1>
-username                                "85RUS Kuban-G1A1-02 script library"
-username-ru                             "85RUS Кубань-Г1А1-02 скрипт библиотека"
+username                                "85RUS Vehicles script library"
+username-ru                             "85RUS Библиотека скриптов для транспорта"
 description                             "Kuban-G1A1-02 script library"
-description-ru                          "Библиотека скрипта для Кубань-Г1А1-02"
+description-ru                          "Библиотека скриптов для транспорта"
 kind                                    "library"
 category-class                          "VL"
 author                                  "Volaner"
